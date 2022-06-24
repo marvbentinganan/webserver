@@ -1,0 +1,8 @@
+---
+- name: Create Server
+  import_playbook: server.yaml
+  tags: create
+
+- name: Provision Server
+  import_playbook: provision.yaml
+  tags: provision

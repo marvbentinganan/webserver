@@ -1,0 +1,16 @@
+[localhost]
+127.0.0.1
+
+[web_server]
+
+[db_server]
+
+[web_server:vars]
+ansible_ssh_user=root 
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
+host_key_checking=False
+do_api_token=
+ln_instance_access_token=
+vr_api_key=

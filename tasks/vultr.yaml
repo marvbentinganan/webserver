@@ -1,0 +1,21 @@
+# Create Vultr Instance
+- name: Create Vultr Instance
+  vultr_server:
+    name: "vr-{{ vr_region }}-{{ vr_server_name }}"
+    hostname: "vr-{{ vr_region }}-{{ vr_server_name }}"
+    os: "{{ vr_os }}"
+    plan: "{{ vr_plan }}"
+    ssh_key: "{{ vr_ssh_key }}"
+    region: "{{ vr_region }}"
+    tag: server
+    state: started
+  environment:
+    VULTR_API_ACCOUNT: "{{ vr_api_account }}"
+    VULTR_API_ENDPOINT: "{{ vr_api_endpoint }}"
+    VULTR_API_KEY: "{{ vr_api_key }}"
+  register: vultr
+
+- name: Add IP to Hosts
+  add_host:
+    name: "{{ vultr.vultr_server.v4_main_ip }}"
+    groups: "web_server"

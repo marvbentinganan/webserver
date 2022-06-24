@@ -1,0 +1,28 @@
+# Cloud Service Provider
+cloud_provider: "digital_ocean" # Available Values: digital_ocean, linode, vultr
+public_keys: []
+public_keys_id: []
+
+# DigitalOcean Variables
+droplets:
+  - do_droplet_size: "s-2vcpu-4gb" # Droplet Size Please Refer to DigitalOcean Documentation for a list of available options
+    do_droplet_region: "sgp1" # Available Values: nyc1, nyc3, sgp1, lon1, ams3, fra1, tor1, sfo2, blr1
+    do_droplet_name: "snap-01"
+    do_droplet_image: "ubuntu-18-04-x64"
+
+# Linode Variables
+ln_instance_type: "g6-standard-1" #2GB 1VCPU 10/MONTH
+ln_instance_region: "us-west" 
+ln_instance_image: "linode/ubuntu18.04"
+ln_instance_label: "spop"
+ln_instance_authorized_keys:
+ - "ssh-rsa ..."
+
+# Vultr Variables
+vr_api_account: ""
+vr_api_endpoint: "https://api.vultr.com/"
+vr_server_name: "spop"
+vr_os: "Ubuntu 18.04 x64"
+vr_plan: "1024 MB RAM,25 GB SSD,1.00 TB BW"
+vr_ssh_key: ""
+vr_region: "Singapore"

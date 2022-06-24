@@ -1,0 +1,130 @@
+---
+- name: Provision Server
+  hosts: web_server
+  remote_user: root
+  vars_files:
+    - global_vars/main.yaml
+  tasks:
+    # Update System
+    - name: Update Server to Latest Packages
+      apt:
+        upgrade: yes
+        update_cache: yes
+
+    - name: Create Swap
+      include_role:
+        name: swap
+      tags: swap
+      when: '"swap" in server_packages'
+
+    - name: Create User
+      include_role:
+        name: users
+      tags: users
+      when: '"users" in server_packages'
+
+    # Install PHP
+    - name: Install and Configure PHP-Versions
+      include_role:
+        name: php-versions
+      tags: [php, server]
+      when: '"php" in server_packages'
+
+    - name: Install and Configure PHP
+      include_role:
+        name: php
+      tags: [php, server]
+      when: '"php" in server_packages'
+
+    - name: Install and Configure Composer
+      include_role:
+        name: composer
+      tags: php
+      when: '"php" in server_packages'
+
+    # Install Pip
+    - name: Install and Configure Pip
+      include_role:
+        name: pip
+      tags: python
+      when: '"pip" in server_packages'
+
+    # Install Nodejs and Yarn
+    - name: Install and Configure Nodejs
+      include_role:
+        name: nodejs
+      tags: nodejs
+      when: '"nodejs" in server_packages'
+
+    - name: Install and Configure Yarn
+      include_role:
+        name: yarn
+      tags: yarn
+      when: '"yarn" in server_packages'
+
+    - name: Install and Configure WP-CLI
+      include_role:
+        name: wp-cli
+      tags: wp-cli
+      when: '"wp-cli" in server_packages'
+
+    # Install Git
+    - name: Install and Configure Git
+      include_role:
+        name: git
+      tags: git
+      when: '"git" in server_packages'
+
+    # Install Golang
+    - name: Install and Configure Golang
+      include_role:
+        name: golang
+      tags: golang
+      when: '"go" in server_packages'
+
+    - name: Take Golang Folder Ownership
+      file:
+        path: /home/{{ admin_user }}/go
+        owner: "{{ admin_user }}"
+        group: "{{ admin_user }}"
+        recurse: true
+      tags: golang
+      when: '"go" in server_packages'
+
+    # Install Database
+    - name: Install and Configure MySQL
+      include_role:
+        name: mysql
+      tags: [mysql, database]
+      when: '"mysql" in server_packages'
+
+    - name: Install and Configure PostgreSQL
+      include_role:
+        name: postgresql
+      tags: [postgresql, database]
+      when: '"postgresql" in server_packages'
+
+    - name: Install and Configure Redis
+      include_role:
+        name: redis
+      tags: [redis, database]
+      when: '"redis" in server_packages'
+
+    - name: Install and Configure Nginx
+      include_role:
+        name: nginx
+      tags: [server. nginx]
+      when: '"nginx" in server_packages'
+
+    # Secure Server
+    - name: Install and Configure Firewall
+      include_role:
+        name: firewall
+      tags: security
+      when: '"firewall" in server_packages'
+
+    - name: Install and Configure Security
+      include_role:
+        name: security
+      tags: security
+      when: '"security" in server_packages'

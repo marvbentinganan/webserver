@@ -1,0 +1,18 @@
+---
+- name: Create a Server
+  hosts: localhost
+  connection: local
+  vars_files:
+    - global_vars/cloud.yaml
+  tasks:
+    - name: Create DigitalOcean Droplet
+      include_tasks: "tasks/digital-ocean.yaml"
+      when: cloud_provider == "digital_ocean"
+
+    - name: Create Linode Instance
+      include_tasks: "tasks/linode.yaml"
+      when: cloud_provider == "linode"
+
+    - name: Create Vultr Server
+      include_tasks: "tasks/vultr.yaml"
+      when: cloud_provider == "vultr"

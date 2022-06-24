@@ -1,0 +1,118 @@
+# Packages to Install
+server_packages:
+  - swap
+  - users
+  - php
+  - postgresql
+  - redis
+  - nodejs
+  - yarn
+  - git
+  - nginx
+  - certbot
+  - firewall
+  - security
+
+# Site Variables
+admin_user: "marvin"
+admin_name: "Support"
+
+database_name: "marvin"
+database_password: "rB6vSWHdEeRAGn"
+
+# Swap Variables
+swap_file_size_mb: "1024"
+
+# PHP Variables
+php_packages_extra: [php-imagick]
+php_default_version_debian: "7.4"
+php_enable_php_fpm: true
+php_fpm_listen: "/var/run/php/php{{ php_default_version_debian }}-fpm.sock"
+php_fpm_state: started
+
+# Composer Variables
+composer_home_path: "/home/{{ admin_user }}/.composer"
+composer_home_owner: "{{ admin_user }}"
+composer_home_group: "{{ admin_user }}"
+
+# Pip Variables
+pip_package: python3-pip
+pip_install_packages:
+  - linode_api4
+  - ansible
+  - passlib
+
+# Node Variables
+nodejs_version: "12.x"
+npm_config_unsafe_perm: "true"
+nodejs_install_npm_user: "{{ admin_user }}"
+nodejs_npm_global_packages:
+  - yarn
+  - gulp
+
+yarn_clean_install: true
+yarn_shell_profiles:
+  - /home/{{ admin_user }}/.bashrc
+  - /home/{{ admin_user }}/.bash_profile
+
+# Go Variables
+go_install_clean: true
+go_install_clean_full: false
+golang_shell_profile: /home/{{ admin_user }}/.bashrc
+GOPATH: /home/{{ admin_user }}/.go
+GOROOT: /usr/local/go
+GOPROXY: https://proxy.golang.org
+
+# wp-cli Variables
+admin_home: "/home/{{ admin_user }}"
+root_bin: "/usr/bin"
+
+# Postgres Variables
+postgresql_python_library: python3-psycopg2
+postgresql_databases:
+  - name: "{{ database_name }}"
+
+postgresql_users:
+  - name: "{{ admin_user }}"
+    password: "{{ database_password }}"
+    privs: ALL
+    role_attr_flags: CREATEDB,CREATEROLE,SUPERUSER,LOGIN
+
+# MySQL Variables
+mysql_databases:
+  - name: "{{ database_name }}"
+    collation: utf8mb4_unicode_ci
+    encoding: utf8mb4
+
+mysql_users:
+  - name: "{{ admin_user }}"
+    host: localhost
+    password: "{{ database_password }}"
+    priv: "*.*:ALL"
+
+# Nginx Variables
+nginx_server_names_hash_bucket_size: "128"
+nginx_remove_default_vhost: true
+
+# Users Variable
+users:
+  - username: "{{ admin_user }}"
+    name: "{{ admin_name }}"
+    uid: 1000
+    generate_ssh_key: true
+    ssh_key:
+      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHWjHQB+BBqmQzt44xzhT9IGfn+/4MlgwB5UfdkgFDF1 marvin.bentinganan@iation.com"
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCoum99Qjt6GU+dqpYl+CrKxrq0RKX/gexsRfWrU+LLwdTCTMpSHATtDwMvUIj89ITjLscvBONM3IX67n+aCD7Xf7cI+wLYDa0xdTC+WZWT0QuB+uByVpwvAS8pFqOVkmWO+1uE3oDtMpoPByBmZ++ZGUtHQ+6q8W+mnBeakVHIN8doNWdCw0P3Q5WOgJXGBw59Bs5yDV/Ht2v0nz627enyKIl6Zp4IFNb3cyTZr/w7uxfVhnYJYETaxB4m2MOSuGLSIXsNz9LpGsMo9znxA+C4C6tbd8vWPhxckF1DUfgUw1xpEniq1bnud2qmqgqu9bxt4h3sermpMi0R7tt41brE7ngKug38v2RPuuosi198hkVo94mkswI6UV2+scw7yy5f5U6IjRzxIN6L9me3zIznB7O06czgBvsiMH1RCz2HARB81XqWPdJRaj4ejLL/nJrr08S+RS2SK8ZtzTucM8/m5mnYixXtEzYhP7NFHvd4OM3me1NHebZNJhT6W0wf9JhcuAb94FW2uxbsAphnaPz1/SC2JooolNgw5TPqyNSlWJHIZwE6/a+3/O92UsZQ+I4IGRE5Gs/VUUFqQs39EtKEI9w2GI2xCuH417ElbJqENVaXYaaA9E2bOpoJavPiFbH8yoVa2yTfbP27RTnSuUhyGWeOHO5tp/XjFl28hNobLw== marvin.bentinganan@iation.com"
+
+# Security Variables
+firewall_allowed_tcp_ports:
+  - "22"
+  - "25"
+  - "80"
+  - "443"
+  - "587"
+firewall_allowed_udp_ports:
+  - ""
+
+security_sudoers_passwordless:
+  - "{{ admin_user }}"

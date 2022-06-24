@@ -1,0 +1,17 @@
+# Create Linode Instance
+- name: Create Linode Instance
+  linode_v4:
+    access_token: "{{ ln_instance_access_token }}"
+    label: "ln-{{ ln_instance_region }}-{{ ln_instance_label }}"
+    type: "{{ ln_instance_type }}"
+    region: "{{ ln_instance_region }}"
+    image: "{{ ln_instance_image }}"
+    tags: server
+    authorized_keys: "{{ ln_instance_authorized_keys }}"
+    state: present
+  register: linode
+
+- name: Add IP to Hosts
+  add_host:
+    name: "{{ linode.instance.ipv4 }}"
+    groups: "web_server"
