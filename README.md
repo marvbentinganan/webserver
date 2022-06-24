@@ -36,10 +36,10 @@ This is an Ansible Playbook that will automate the **creation** and **provisioni
 
 ## Usage
 
-1. Clone this repository into your machine with Ansible installed. `git clone git@git.iation.com:ansible/webserver.git`.
+1. Clone this repository into your machine with Ansible installed.
 
 2. Create a `hosts` file. A sample hosts file is included in this repo.
 
-3. Update the variables file located inside `vars/main.yml`. If you are using this playbook to automate server creation, set your cloud provider variables inside `vars/cloud.yml`.
+3. Update the variables file located inside `global_vars/main.yaml`. If you are using this playbook to automate server creation, set your cloud provider variables inside `vars/cloud.yml`.
 
-4. Provision your server. `ansible-playbook -i hosts setup.yml`.
+4. Provision your server. `ansible-playbook -i hosts setup.yaml`.
