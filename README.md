@@ -40,6 +40,6 @@ This is an Ansible Playbook that will automate the **creation** and **provisioni
 
 2. Create a `hosts` file. A sample hosts file is included in this repo.
 
-3. Update the variables file located inside `global_vars/main.yaml`. If you are using this playbook to automate server creation, set your cloud provider variables inside `vars/cloud.yml`.
+3. Update the variables file located inside `global_vars/main.yaml`. If you are using this playbook to automate server creation, set your cloud provider variables inside `global_vars/cloud.yaml`.
 
 4. Provision your server. `ansible-playbook -i hosts setup.yaml`.
